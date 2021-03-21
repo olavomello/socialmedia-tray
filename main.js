@@ -1,13 +1,26 @@
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  Tray,
+  ipcMain,
+  ipcRenderer,
+} = require("electron");
 var path = require("path");
 let win = null;
 
 function createWindow() {
-  // Icon
-  const iconFile =
+  // Icon main
+  let iconFile =
     process.platform !== "darwin"
-      ? path.join(__dirname, "assets/icons/win/128x128-off.ico")
-      : path.join(__dirname, "assets/icons/mac/128x128-off.icns");
+      ? path.join(__dirname, "assets/icons/win/main.ico")
+      : path.join(__dirname, "assets/icons/png/main.png");
+
+  // Icon status
+  let iconFileStatus =
+    process.platform !== "darwin"
+      ? path.join(__dirname, "assets/icons/win/128x128-on.ico")
+      : path.join(__dirname, "assets/icons/mac/128x128-on.png");      
 
   win = new BrowserWindow({
     width: 300,
@@ -22,6 +35,22 @@ function createWindow() {
     icon: iconFile,
   });
 
+  win.setIcon(iconFile);
+  win.setOverlayIcon(iconFileStatus, "Online");
+
+  // Disable context menu for // TODO
+  //win.removeMenu();
+
+  // Tray
+  let tray = new Tray(iconFile);
+  const contextMenu = Menu.buildFromTemplate([
+    { label: "Item1", type: "radio" },
+    { label: "Item2", type: "radio" },
+    { label: "Item3", type: "radio", checked: true }
+  ]);
+  tray.setToolTip("My Widget.");
+  tray.setContextMenu(contextMenu);
+
   //
   /* Online - Offline */
   const updateOnlineStatus = () => {
@@ -34,23 +63,22 @@ function createWindow() {
   // Open window
   win.loadFile("index.html");
 
-  app.setUserTasks([
-    {
-      program: process.execPath,
-      arguments: "--new-window",
-      iconPath: process.execPath,
-      iconIndex: 0,
-      title: "Widget",
-      description: "Real time monitor",
-    },
-  ]);
+  // Content protection
+  win.setContentProtection(true);
 
   // Online Offline - monitor status
   ipcMain.on("online-status-changed", (event, online) => {
-    //
-    if (online)
-      win.icon = path.join(__dirname, "assets/icons/png/128x128-on.png");
-    else win.icon = path.join(__dirname, "assets/icons/png/128x128-off.png");
+    // Check status
+    if (online) {
+      if (process.platform !== "darwin")
+        iconFileStatus = path.join(__dirname, "assets/icons/win/128x128-on.ico");
+      else iconFileStatus = path.join(__dirname, "assets/icons/mac/128x128-on.icns");
+    } else {
+      if (process.platform !== "darwin")
+        iconFileStatus = path.join(__dirname, "assets/icons/win/128x128-off.ico");
+      else iconFileStatus = path.join(__dirname, "assets/icons/mac/128x128-off.icns");
+    }
+    win.setOverlayIcon(iconFileStatus);
   });
 }
 
@@ -67,3 +95,14 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+app.setUserTasks([
+  {
+    program: process.execPath,
+    arguments: "--new-window",
+    iconPath: process.execPath,
+    iconIndex: 0,
+    title: "Widget",
+    description: "Real time monitor",
+  },
+]);
