@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  /* Disable selection */
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  -webkit-app-region: drag;
+}
+input, button, textarea, :focus {
+    outline: none;
+}
+
+:root {
+  font-family: "Inter", sans-serif;
+  font-size: 180%;
+}
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #fff;
+}
+
+span {
+  font-size: 300%;
+}
