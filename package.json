@@ -4,7 +4,8 @@
   "description": "Widget",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   },
   "homepage": "https://github.com/maykbrito/insta-post-reminder#readme",
   "devDependencies": {
-    "electron": "^12.0.1"
+    "electron": "^12.0.1",
+    "electron-builder": "^22.10.5"
   },
   "dependencies": {}
 }
