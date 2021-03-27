@@ -63,7 +63,6 @@ function mainWindow() {
     {label: "Twitter", click: () => { openWindow("twitter","https://twitter.com") }},
     {label: "Facebook", click: () => { openWindow("facebook","https://facebook.com") }},
     {label: "Youtube", click: () => { openWindow("youtube","https://youtube.com") }},
-    {label: "Whatsapp", click: () => { openWindow("whatsapp","https://web.whatsapp.com") }},
     {label: "Fechar", click: () =>  { app.quit() }},
     /*
     {
