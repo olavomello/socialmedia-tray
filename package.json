@@ -25,6 +25,7 @@
   "dependencies": {},
   "build": {
     "productName": "Widget - Social Media Tray",
+    "copyright": "Created by Olavo Mello",
     "directories": {
       "buildResources": "src"
     },
