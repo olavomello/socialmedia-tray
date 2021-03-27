@@ -1,108 +1,92 @@
-const {
-  app,
-  BrowserWindow,
-  Menu,
-  Tray,
-  ipcMain,
-  ipcRenderer,
-} = require("electron");
+const { app, BrowserWindow, screen, Tray, Menu  } = require("electron");
+
 var path = require("path");
-let win = null;
 
-function createWindow() {
+// Open new window
+function openWindow( name, url ) {
+  let win = null;
+
   // Icon main
-  let iconFile =
-    process.platform !== "darwin"
-      ? path.join(__dirname, "assets/icons/win/main.ico")
-      : path.join(__dirname, "assets/icons/png/main.png");
-
-  // Icon status
-  let iconFileStatus =
-    process.platform !== "darwin"
-      ? path.join(__dirname, "assets/icons/win/128x128-on.ico")
-      : path.join(__dirname, "assets/icons/mac/128x128-on.png");      
+  let iconFile =  path.join(__dirname, "src/icons/" + name + ".png");
 
   win = new BrowserWindow({
-    width: 300,
-    height: 300,
+    width: 450,
+    height: 800,
+    frame: true,
+    resizable: true,
+    fullscreenable: false,
+    selectable: false,
+    background: false,
+    transparent: true,
+    movable: true,
+    alwaysOnTop: false,
+  });
+  win.setMenu(null);
+  win.setIcon(iconFile);  
+  win.loadURL(url);
+}
+
+function mainWindow() {
+  let win = null;
+  // Icon main
+  let iconFile =  path.join(__dirname, "src/icons/main.png");
+
+  // Screen width x height
+  const { screeWidth, screeHeight } = screen.getPrimaryDisplay().workAreaSize;
+
+  win = new BrowserWindow({
+    width: screeWidth,
+    height: screeHeight,
     frame: false,
-    resizable: false,
+    resizable: true,
     fullscreenable: false,
     selectable: false,
     background: false,
     transparent: true,
     movable: true,
     icon: iconFile,
+    alwaysOnTop: false,
   });
 
   win.setIcon(iconFile);
-  win.setOverlayIcon(iconFileStatus, "Online");
+  win.maximize();
+  win.hide();
+  //win.setContentProtection(true);
+  win.setMenu(null);
 
-  // Disable context menu for // TODO
-  //win.removeMenu();
+  // Open main window
+  win.loadFile("index.html"); 
 
-  // Tray
-  let tray = new Tray(iconFile);
+  tray = new Tray(iconFile)
   const contextMenu = Menu.buildFromTemplate([
-    { label: "Item1", type: "radio" },
-    { label: "Item2", type: "radio" },
-    { label: "Item3", type: "radio", checked: true }
-  ]);
-  tray.setToolTip("My Widget.");
+    {label: "Instagram", click: () => { openWindow("instagram","https://instagram.com") }},
+    {label: "Twitter", click: () => { openWindow("twitter","https://twitter.com") }},
+    {label: "Facebook", click: () => { openWindow("facebook","https://facebook.com") }},
+    {label: "Youtube", click: () => { openWindow("youtube","https://youtube.com") }},
+    {label: "Whatsapp", click: () => { openWindow("whatsapp","https://web.whatsapp.com") }},
+    {label: "Fechar", click: () =>  { app.quit() }},
+    /*
+    {
+      label: "Call function",
+      click: () => {
+        const text = 'asdasdasd'
+        // #1
+        win.webContents.send('call-foo', text)
+        // #2
+        win.webContents.executeJavaScript(`
+          foo('${text}')
+        `)
+      }
+    }
+    */
+  ])
   tray.setContextMenu(contextMenu);
 
-  //
-  /* Online - Offline */
-  const updateOnlineStatus = () => {
-    ipcRenderer.send(
-      "online-status-changed",
-      navigator.onLine ? "online" : "offline"
-    );
-  };
-
-  // Open window
-  win.loadFile("index.html");
-
-  // Content protection
-  win.setContentProtection(true);
-
-  // Online Offline - monitor status
-  ipcMain.on("online-status-changed", (event, online) => {
-    // Check status
-    if (online) {
-      if (process.platform !== "darwin")
-        iconFileStatus = path.join(__dirname, "assets/icons/win/128x128-on.ico");
-      else iconFileStatus = path.join(__dirname, "assets/icons/mac/128x128-on.icns");
-    } else {
-      if (process.platform !== "darwin")
-        iconFileStatus = path.join(__dirname, "assets/icons/win/128x128-off.ico");
-      else iconFileStatus = path.join(__dirname, "assets/icons/mac/128x128-off.icns");
-    }
-    win.setOverlayIcon(iconFileStatus);
-  });
 }
 
-app.whenReady().then(createWindow);
+// Load - start ini
+app.whenReady().then(mainWindow);
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
-
-app.setUserTasks([
-  {
-    program: process.execPath,
-    arguments: "--new-window",
-    iconPath: process.execPath,
-    iconIndex: 0,
-    title: "Widget",
-    description: "Real time monitor",
-  },
-]);
+global.HelloWorld = function(name){
+  return 'Hello World! said ' + name;
+}

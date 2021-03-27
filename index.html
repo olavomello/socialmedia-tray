@@ -13,24 +13,6 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body oncontextmenu="return false;">
-    <script type="module">
-      import { App } from "./src/App.js";
-      App.start();
-
-      // Online / Offline status
-      const alertOnlineStatus = () => {
-        return navigator.onLine;
-      };
-      window.addEventListener("online", alertOnlineStatus);
-      window.addEventListener("offline", alertOnlineStatus);
-      alertOnlineStatus();
-
-      // Disable context menu
-      window.addEventListener("contextmenu", (e) => e.preventDefault());
-      const noRightClick = document.body;
-      noRightClick.addEventListener("contextmenu", (e) => e.preventDefault());
-      
-    </script>
+  <body>
   </body>
 </html>
