@@ -1,7 +1,7 @@
 {
-  "name": "widget",
-  "version": "1.0.0",
-  "description": "Widget",
+  "name": "widget-socialmedia-tray",
+  "version": "1.0.1",
+  "description": "Widget - Social Media Tray using Electron.js",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maykbrito/insta-post-reminder.git"
+    "url": "git+https://github.com/olavomello/socialmedia-tray.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maykbrito/insta-post-reminder/issues"
+    "url": "https://github.com/olavomello/socialmedia-tray/issues"
   },
-  "homepage": "https://github.com/maykbrito/insta-post-reminder#readme",
+  "homepage": "https://github.com/olavomello/socialmedia-tray#readme",
   "devDependencies": {
     "electron": "^12.0.1",
     "electron-builder": "^22.10.5"
