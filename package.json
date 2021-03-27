@@ -22,5 +22,16 @@
     "electron": "^12.0.1",
     "electron-builder": "^22.10.5"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "build": {
+    "mac": {
+      "icon": "icons/main.icns"
+    },
+    "linux": {
+      "icon": "icons/main.png"
+    },
+    "win": {
+      "icon": "icons/main.ico"
+    }
+  }
 }
