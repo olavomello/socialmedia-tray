@@ -24,14 +24,26 @@
   },
   "dependencies": {},
   "build": {
+    "productName": "Widget - Social Media Tray",
+    "directories": {
+      "buildResources": "src"
+    },
     "mac": {
-      "icon": "icons/main.icns"
+      "icon": "./src/icons/main.icns",
+      "category": "public.app-category.utilities"
     },
     "linux": {
-      "icon": "icons/main.png"
+      "icon": "./src/icons/main.png"
     },
     "win": {
-      "icon": "icons/main.ico"
-    }
+      "icon": "./src/icons/main.ico"
+    },
+    "files": [
+      "./build/**/*",
+      "./dist/**/*",
+      "./node_modules/**/*",
+      "./src/**/*",
+      "*.js"
+    ]
   }
 }
