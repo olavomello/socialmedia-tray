@@ -8,12 +8,9 @@
     "build-64": "electron-builder",
     "build-32": "electron-builder --ia32"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/olavomello/socialmedia-tray.git"
-  },
+  "repository": "git+https://github.com/olavomello/socialmedia-tray.git",
   "keywords": [],
-  "author": "",
+  "author": "Olavo Mello <olavo@agenciadix.com.br>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/olavomello/socialmedia-tray/issues"

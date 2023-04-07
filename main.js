@@ -77,11 +77,17 @@ function mainWindow() {
       },
     },
     {
+      label: "Linkedin",
+      click: () => {
+        openWindow("linkedin", "https://linkedin.com", false);
+      },
+    },
+    {
       label: "Twitter",
       click: () => {
         openWindow("twitter", "https://twitter.com", false);
       },
-    },
+    },    
     {
       label: "Facebook",
       click: () => {
@@ -132,7 +138,3 @@ function mainWindow() {
 
 // Load - start ini
 app.whenReady().then(mainWindow);
-
-global.HelloWorld = function (name) {
-  return "Hello World! said " + name;
-};
