@@ -13,13 +13,11 @@
 					type="checkbox"
 					name="<%=SocialMedia.name.toLowerCase()%>"
 					value="<%=SocialMedia.name.toLowerCase()%>"
-					<%
-					if
-					(SocialMedia.checked)
-					{
-					%
+					<% if (SocialMedia.checked) { %>
+						checked
+					<% } %>
 				/>
-				checked <% } %> /> <%=SocialMedia.name%>
+				<%=SocialMedia.name%>
 			</label>
 			<br />
 			<% }); %>
