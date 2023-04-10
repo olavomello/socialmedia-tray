@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Configurações</title>
+	</head>
+	<body>
+		<h1>Opções:</h1>
+		<form>
+			<% socialmediaoptions.forEach(SocialMedia => { %>
+			<label>
+				<input
+					type="checkbox"
+					name="<%=SocialMedia.name.toLowerCase()%>"
+					value="<%=SocialMedia.name.toLowerCase()%>"
+					<% if (SocialMedia.checked) { %>
+						checked
+					<% } %>
+				/>
+				<%=SocialMedia.name%>
+			</label>
+			<br />
+			<% }); %>
+			<input type="submit" value="Salvar" />
+		</form>
+		<script>
+			const { ipcRenderer } = require('electron');
+			const form = document.querySelector('form');
+			form.addEventListener('submit', (event) => {
+				event.preventDefault();
+				const selectedSites = Array.from(
+					form.querySelectorAll('input[type=checkbox]:checked')
+				).map((checkbox) => checkbox.value);
+				ipcRenderer.send('select-sites', selectedSites);
+			});
+		</script>
+	</body>
+</html>
